@@ -1,8 +1,10 @@
-<div class="span12">
-	<h1>Configuration</h1>
-	<ul>
-		<li>Normal CakePHP configs: core.php, database.php</li>
-		<li>Change email address in /app/Controller/Component/common.php</li>
-		<li>Install /app/Config/database_init.sql</li>
-	</ul>
+<div class="span6 offset3">
+	<div class="well">
+		<h1>Welcome</h1>
+		<p>This is the timesheet portal for CASA Amarillo. To continue, please login or register.</p>
+		<div class="btn-group">
+			<?php echo $this->Html->link('Register','/users/register',array('class'=>'btn btn-large')) ?>
+			<?php echo $this->Html->link('Login','/users/login',array('class'=>'btn btn-large btn-primary')) ?>
+		</div>
+	</div>
 </div>

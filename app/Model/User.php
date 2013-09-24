@@ -1,18 +1,51 @@
 <?php
 App::uses('AppModel', 'Model');
 class User extends AppModel {
-	var $order = array('User.email');
+	var $order = array('email');
+	
+	var $virtualFields = array(
+		'name' => 'CONCAT(first_name, " ", last_name)'
+	);
+	
+	var $displayField = 'name';
 	
 	var $belongsTo = array(
 		'Role' => array(
 			'className' => 'Role',
 			'foreignKey' => 'role_id'
 		),
+		'Supervisor' => array(
+			'className' => 'User',
+			'foreignKey' => 'supervisor_id'
+		)
+	);
+	
+	var $containConfig = array(
+		'Role'
 	);
 
 	var $hasMany = array(
 		'LoginToken' => array(
 			'dependent' => true,
+		),
+		'Timesheet',
+		'Volunteer' => array(
+			'className' => 'User',
+			'foreignKey' => 'supervisor_id',
+			'order' => '',
+			'dependent' => false 
+		),
+		'SupervisorCase' => array(
+			'className' => 'CasaCase',
+			'foreignKey' => 'supervisor_id',
+			'order' => '',
+			'dependent' => false 
+		),
+		'VolunteerCase' => array(
+			'className' => 'CasaCase',
+			'foreignKey' => 'user_id',
+			'order' => '',
+			'dependent' => false 
 		),
 	);
 

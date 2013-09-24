@@ -156,12 +156,23 @@ class UsersController extends AppController {
 	
 	
 	function dashboard() {
-		
+		$timesheets = $this->User->Timesheet->find('all',array(
+			'conditions' => array(
+				'Timesheet.user_id' => Authsome::get('User.id')
+			)
+		));
+		$this->set(compact('timesheets'));
 	}
 	
 	
 	public function admin_index() {
 		$this->User->recursive = 0;
+		$this->paginate = array(
+			'conditions' => array(
+				'User.id NOT' => 1
+			),
+			'contain' => array('Role')
+		);
 		$this->set('users', $this->paginate());
 	}
 
@@ -177,10 +188,14 @@ class UsersController extends AppController {
 				$this->Session->setFlash('The user could not be saved. Please, try again.','error');
 			}
 		} else {
-			$options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
+			$options = array(
+				'conditions' => array('User.' . $this->User->primaryKey => $id),
+				'contain' => array()
+			);
 			$this->request->data = $this->User->find('first', $options);
+			$this->request->data['User']['passwd'] = '';
 		}
-		$this->set('roles',$this->User->Role->find('list'));
+		$this->set('roles',$this->User->Role->find('list',array('contain'=>array())));
 	}
 
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>AppInstall</title>
+	<title>Casa Timesheet</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="">
 	<meta name="author" content="">
@@ -58,15 +58,18 @@
 				</button>
 				<!-- /Mobile Menu Button -->
 
-				<?php echo $this->Html->link('<i class="icon-html5"></i> AppInstall','/',array('escape'=>false,'class'=>'brand')) ?>
+				<?php echo $this->Html->link($this->Html->image('logo.png'),'/',array('escape'=>false,'class'=>'brand')) ?>
 
-				<div class="nav-collapse collapse pull-right">
+				<div id="menu" class="nav-collapse collapse pull-right">
 					<ul class="nav">
-						<li class="active"><?php echo $this->Html->link('Home','/') ?></li>
-						<?php if(Authsome::get('Role.name') == 'Admin'): ?>
+						<li class=""><?php echo $this->Html->link('Home','/') ?></li>
+						<?php if(Authsome::get('Role.name') == 'Supervisor'): ?>
 						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="admin_dropdown">Admin <b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<li><?php echo $this->Html->link('Users','/admin/users') ?></li>
+								<li><?php echo $this->Html->link('Volunteers/Supervisors','/admin/users') ?></li>
+								<li><?php echo $this->Html->link('Cases','/admin/casa_cases') ?></li>
+								<li><?php echo $this->Html->link('Timesheets','/admin/timesheets') ?></li>
+								<li><?php echo $this->Html->link('Communications','/admin/communications') ?></li>
 							</ul>
 						</li>
 						<?php endif ?>

@@ -1,8 +1,8 @@
 <div class="admin_header">
 	<h3>
-		<i class="icon-edit"></i> Users
+		<i class="icon-edit"></i> Volunteers / Supervisors
 		<div class="btn-group pull-right">
-			<?php echo $this->Html->link('Add User', array('action' => 'add'),array('class'=>'btn','escape'=>false)); ?>
+			<?php echo $this->Html->link('Add User', array('action' => 'register','admin' => false),array('class'=>'btn','escape'=>false)); ?>
 		</div>
 	</h3>
 </div>
