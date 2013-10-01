@@ -130,7 +130,7 @@ class UsersController extends AppController {
 				
 				//Get User Role
 				$this->request->data['User']['role_id'] = $this->User->Role->lookup(array(
-					'name'=>'User',
+					'name'=>'Volunteer',
 					'permissions' => '*:*,!*:admin_*',
 				));
 								
@@ -158,7 +158,8 @@ class UsersController extends AppController {
 	function dashboard() {
 		$timesheets = $this->User->Timesheet->find('all',array(
 			'conditions' => array(
-				'Timesheet.user_id' => Authsome::get('User.id')
+				'Timesheet.user_id' => Authsome::get('User.id'),
+				'Timesheet.submitted' => null
 			)
 		));
 		$this->set(compact('timesheets'));
@@ -167,15 +168,42 @@ class UsersController extends AppController {
 	
 	public function admin_index() {
 		$this->User->recursive = 0;
-		$this->paginate = array(
+		$paginate = array(
 			'conditions' => array(
 				'User.id NOT' => 1
 			),
 			'contain' => array('Role')
 		);
+		
+		if(!empty($this->request->data['User']['search'])) {
+			$paginate['conditions'][] = array('OR' => array(
+				'User.first_name LIKE' => '%'.$this->request->data['User']['search'].'%',
+				'User.last_name LIKE' => '%'.$this->request->data['User']['search'].'%',
+				'User.email LIKE' => '%'.$this->request->data['User']['search'].'%',
+			));
+		}
+		
+		$this->paginate = $paginate;
 		$this->set('users', $this->paginate());
 	}
 
+	public function admin_add() {
+		if(!empty($this->request->data)) {
+			$this->User->create();
+			$this->request->data['User']['verified'] = date('Y-m-d H:i:s');
+			if($this->User->save($this->request->data)) {
+				$this->Session->setFlash('User saved','success');
+				$this->redirect(array('action'=>'index'));
+			}
+		}
+		$roles = $this->User->Role->find('list',array(
+			'conditions' => array(
+				'Role.name NOT' => 'Guest'
+			)
+		));
+		$this->set(compact('roles'));
+	}
+	
 	public function admin_edit($id = null) {
 		if (!$this->User->exists($id)) {
 			throw new NotFoundException(__('Invalid user'));

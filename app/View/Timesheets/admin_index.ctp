@@ -14,19 +14,23 @@
 					<?php echo $this->Paginator->sort('name','<i class="icon-sort"></i> Name',array('escape'=>false)); ?>
 				</th>
 				<th>
+					<?php echo $this->Paginator->sort('date','<i class="icon-sort"></i> Date',array('escape'=>false)); ?>
+				</th>
+				<th>
 					<?php echo $this->Paginator->sort('user_id','<i class="icon-sort"></i> Volunteer',array('escape'=>false)); ?>
 				</th>
 				<th>
-					<?php echo $this->Paginator->sort('supervisor_id','<i class="icon-sort"></i> Supervisor',array('escape'=>false)); ?>
+					<?php echo $this->Paginator->sort('submitted','<i class="icon-sort"></i> Submitted',array('escape'=>false)); ?>
 				</th>
 			</tr>
 		</thead>
 		<tbody>
 		<?php foreach($timesheets as $timesheet): ?>
 			<tr>
-				<td><?php echo $this->Html->link($timesheet['CasaTimesheet']['name'],array('action'=>'edit',$timesheet['CasaTimesheet']['id'])) ?></td>
-				<td><?php echo $volunteers[$timesheet['CasaTimesheet']['user_id']] ?></td>
-				<td><?php echo $supervisors[$timesheet['CasaTimesheet']['supervisor_id']] ?></td>
+				<td><?php echo $this->Html->link($timesheet['CasaCase']['name'],array('action'=>'edit','admin'=>false,$timesheet['Timesheet']['id'])) ?></td>
+				<td><?php echo date('M Y',strtotime($timesheet['Timesheet']['date'])) ?></td>
+				<td><?php echo $timesheet['CasaCase']['Volunteer']['first_name'].' '.$timesheet['CasaCase']['Volunteer']['last_name'] ?></td>
+				<td><?php echo !empty($timesheet['Timesheet']['submitted'])?date('M d, Y',strtotime($timesheet['Timesheet']['submitted'])):'' ?></td>
 			</tr>
 		<?php endforeach ?>
 		</tbody>

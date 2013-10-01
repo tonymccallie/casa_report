@@ -2,6 +2,11 @@
 App::uses('AppController', 'Controller');
 class TimesheetsController extends AppController {
 	public function admin_index() {
+		$this->paginate = array(
+			'contain' => array(
+				'CasaCase' => 'Volunteer'
+			)
+		);
 		$timesheets = $this->paginate();
 		$this->set(compact('timesheets'));
 	}
@@ -11,7 +16,7 @@ class TimesheetsController extends AppController {
 			$this->view = 'choose';
 			$cases = $this->Timesheet->CasaCase->find('all',array(
 				'conditions' => array(
-					'CasaCase.timesheet_id' => Authsome::get('User.id')
+					'CasaCase.user_id' => Authsome::get('User.id')
 				),
 				'contain' => array()
 			));
@@ -21,7 +26,8 @@ class TimesheetsController extends AppController {
 			$data = array(
 				'Timesheet' => array(
 					'timesheet_id' => Authsome::get('User.id'),
-					'case_id' => $id
+					'case_id' => $id,
+					'date' => date('Y-m-d')
 				)
 			);
 			if($this->Timesheet->save($data)) {
@@ -37,6 +43,30 @@ class TimesheetsController extends AppController {
 			throw new NotFoundException(__('Invalid timesheet'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
+			if(!empty($this->request->data['Timesheet']['submit'])) {
+				$this->request->data['Timesheet']['submitted'] = date('Y-m-d H:i:s');
+				$info = $this->Timesheet->find('first', array(
+					'conditions' => array(
+						'Timesheet.id' => $this->request->data['Timesheet']['id']
+					),
+					'contain' => array(
+						'CasaCase' => array(
+							'Supervisor'
+						),
+						'User'
+					)
+				));
+				$supervisor = $info['CasaCase']['Supervisor']['email'];
+				//EMAIL ADMINS
+				Common::email(array(
+					'to' => $supervisor,
+					'subject' => 'Timesheet submitted',
+					'template' => 'submit',
+					'variables' => array(
+						'timesheet' => $info
+					)
+				),'');
+			}
 			$this->request->data['Timesheet']['date']['day'] = '01';
 			if ($this->Timesheet->save($this->request->data)) {
 				$this->Session->setFlash('The timesheet has been saved','success');
@@ -52,7 +82,9 @@ class TimesheetsController extends AppController {
 						'Communication'
 					),
 					'CasaCase' => array(
-						'Child'
+						'Child' =>  array(
+							'order' => array('Child.dob')
+						)
 					)
 				)
 			);

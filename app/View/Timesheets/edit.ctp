@@ -17,23 +17,36 @@
 			</div>
 		</div>
 		<h4>Children</h4>
+		<table class="table table-striped table-bordered">
+			<tr>
+				<th>
+					Name
+				</th>
+				<th>
+					Gender
+				</th>
+				<th>
+					Age
+				</th>
+			</tr>
 		<?php foreach($this->data['CasaCase']['Child'] as $child): ?>
-			<div class="row-fluid">
-				<div class="span6">
+			<tr>
+				<td>
 					<?php
 						$age = date_diff(date_create($child['dob']),date_create('now'));
 						$age = $age->format('%y');
 						echo $child['first_name'].' '.$child['last_name'];
 					?>
-				</div>
-				<div class="span2">
+				</td>
+				<td>
 					<?php echo $child['gender'] ?>
-				</div>
-				<div class="span4">
+				</td>
+				<td>
 					<?php echo $age ?> y/o
-				</div>
-			</div>
+				</td>
+			</tr>
 		<?php endforeach ?>
+		</table>
 	</div>
 	<div class="span6">
 		<?php echo $this->Form->input('date',array('label'=>'Timesheet month','empty'=>true,'dateFormat'=>'MY','minYear'=>date('Y')-10,'maxYear'=>date('Y'))); ?>
@@ -54,55 +67,64 @@
 <div class="row-fluid">
 	<div class="span12">
 		<h4>Contact Log</h4>
-		<div class="row-fluid">
-			<div class="span2">
-				Date:
-			</div>
-			<div class="span2">
-				Person:
-			</div>
-			<div class="span2">
-				Type:
-			</div>
-			<div class="span2">
-				Case Hours
-			</div>
-			<div class="span2">
-				Non-Case Hours
-			</div>
-			<div class="span2">
-				Mileage
-			</div>
-		</div>
-		<?php foreach($this->data['Record'] as $record): ?>
-			<div class="row-fluid">
-				<div class="span2">
+		<table class="table table-striped table-bordered">
+			<tr>
+				<th>
+					Date:
+				</th>
+				<th>
+					Person:
+				</th>
+				<th>
+					Type:
+				</th>
+				<th class="hidden-phone">
+					Case Hours
+				</div>
+				<th class="hidden-phone">
+					Non-Case Hours
+				</th>
+				<th class="hidden-phone">
+					Mileage
+				</th>
+			</tr>
+		<?php foreach($this->data['Record'] as $record): 
+				if(!empty($record['notes'])) {
+					$rowspan = 'rowspan="2"';
+				} else {
+					$rowspan = '';
+				}
+		?>
+			<tr>
+				<td <?php echo $rowspan ?>>
+					<?php echo $this->Html->link('<i class="icon-edit"></i>','/records/edit/'.$record['id'],array('escape'=>false,'class'=>'btn')) ?>
 					<?php echo date('M jS', strtotime($record['date'])) ?>
-				</div>
-				<div class="span2">
+				</td>
+				<td>
 					<?php echo $record['person'] ?>
-				</div>
-				<div class="span2">
+				</td>
+				<td>
 					<?php echo $record['Communication']['title'] ?>
-				</div>
-				<div class="span2">
+				</td>
+				<td class="hidden-phone">
 					<?php echo $record['case_hours'] ?>
-				</div>
-				<div class="span2">
+				</td>
+				<td class="hidden-phone">
 					<?php echo $record['non_case_hours'] ?>
-				</div>
-				<div class="span2">
+				</td>
+				<td class="hidden-phone">
 					<?php echo $record['mileage'] ?>
 				</div>
-			</div>
+			</tr>
 			<?php if(!empty($record['notes'])): ?>
-			<div class="row-fluid">
-				<div class="span11 offset1">
-					<i>Contact notes: <?php echo $record['notes'] ?></i>
-				</div>
-			</div>
+			<tr>
+				<td colspan="5">
+					<i>Notes: <?php echo $record['notes'] ?></i>
+				</td>
+			</tr>
 			<?php endif ?>
 		<?php endforeach ?>
+		</table>
 		<?php echo $this->Html->link('Add Contact','/records/add/'.$this->data['Timesheet']['id'],array('class'=>'btn btn-primary')) ?>
 	</div>
 </div>
@@ -113,7 +135,12 @@
 </div>
 <div class="row-fluid">
 	<div class="span12">
-		<?php echo $this->Form->submit('Save Timesheet',array('class'=>'btn btn-primary pull-right')); ?>
+		<div class="btn-group pull-right">
+			<?php
+				echo $this->Form->submit('Submit Timesheet',array('class'=>'btn','name'=>'data[Timesheet][submit]','div'=>false));
+				echo $this->Form->submit('Save Timesheet',array('class'=>'btn btn-primary','div'=>false));
+			?>
+		</div>
 	</div>
 </div>
 <?php echo $this->Form->end() ?>

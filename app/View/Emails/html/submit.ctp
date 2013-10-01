@@ -1,0 +1,1 @@
+<p><?php echo $timesheet['User']['first_name'].' '.$timesheet['User']['last_name'] ?> has submitted their timesheet for <?php echo date('M Y',strtotime($timesheet['Timesheet']['date'])) ?></p>
