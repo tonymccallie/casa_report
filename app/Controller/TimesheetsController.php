@@ -56,7 +56,7 @@ class TimesheetsController extends AppController {
 						'User'
 					)
 				));
-				$supervisor = $info['CasaCase']['Supervisor']['email'];
+				$supervisor = $info['CasaCase']['Supervisor']['email'].', alex@amarillocasa.org';
 				//EMAIL ADMINS
 				Common::email(array(
 					'to' => $supervisor,
