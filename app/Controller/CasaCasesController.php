@@ -2,21 +2,32 @@
 App::uses('AppController', 'Controller');
 class CasaCasesController extends AppController {
 	public function admin_index() {
-		$this->paginate = array(
+		$paginate = array(
 			'contain' => array(
 
 			)
 		);
+		
+		if(!empty($this->request->data['CasaCase']['search'])) {
+			$paginate['conditions'] = array('OR' => array(
+				'CasaCase.name LIKE' => '%'.$this->request->data['CasaCase']['search'].'%',
+				'CasaCase.city LIKE' => '%'.$this->request->data['CasaCase']['search'].'%',
+				'CasaCase.state LIKE' => '%'.$this->request->data['CasaCase']['search'].'%',
+				'CasaCase.zip LIKE' => '%'.$this->request->data['CasaCase']['search'].'%',
+			));
+		}
+		
+		$this->paginate = $paginate;
 		$cases = $this->paginate();
 		$supervisors = $this->CasaCase->Supervisor->find('list',array(
 			'conditions' => array(
 				'Supervisor.role_id' => 3
-			)
+			),
 		));
 		$volunteers = $this->CasaCase->Volunteer->find('list',array(
 			'conditions' => array(
 				'Volunteer.role_id' => 2
-			)
+			),
 		));
 		$this->set(compact('cases','supervisors','volunteers'));
 	}

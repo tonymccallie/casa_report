@@ -5,11 +5,19 @@ class CasaCase extends AppModel {
 	public $belongsTo = array(
 		'Volunteer' => array(
 			'className' => 'User',
-			'foreignKey' => 'user_id'
+			'foreignKey' => 'user_id',
+			'sort' => array(
+				'User.first_name' => 'asc',
+				'User.last_name' => 'asc',
+			)
 		),
 		'Supervisor' => array(
 			'className' => 'User',
-			'foreignKey' => 'supervisor_id'
+			'foreignKey' => 'supervisor_id',
+			'sort' => array(
+				'User.first_name' => 'asc',
+				'User.last_name' => 'asc',
+			)
 		),
 	);
 

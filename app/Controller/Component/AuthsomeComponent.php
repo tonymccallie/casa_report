@@ -169,6 +169,7 @@ throw new Exception(
 	}
 
 	private function __useCookieToken() {
+		Configure::write('debug', 0);
 		$token = $this->Cookie->read($this->settings['cookieKey']);
 		if (!$token) {
 			return false;

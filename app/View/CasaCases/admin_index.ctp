@@ -7,6 +7,7 @@
 	</h3>
 </div>
 <div class="">
+	<?php echo $this->element('search') ?>
 	<table class="table table-striped table-bordered">
 		<thead>
 			<tr>

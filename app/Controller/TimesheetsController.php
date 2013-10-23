@@ -27,6 +27,7 @@ class TimesheetsController extends AppController {
 				'Timesheet' => array(
 					'timesheet_id' => Authsome::get('User.id'),
 					'case_id' => $id,
+					'user_id' => Authsome::get('User.id'),
 					'date' => date('Y-m-d')
 				)
 			);
@@ -56,7 +57,7 @@ class TimesheetsController extends AppController {
 						'User'
 					)
 				));
-				$supervisor = $info['CasaCase']['Supervisor']['email'].', alex@amarillocasa.org';
+				$supervisor = array($info['CasaCase']['Supervisor']['email'],'alex@amarillocasa.org');
 				//EMAIL ADMINS
 				Common::email(array(
 					'to' => $supervisor,
@@ -68,6 +69,37 @@ class TimesheetsController extends AppController {
 				),'');
 			}
 			$this->request->data['Timesheet']['date']['day'] = '01';
+			if ($this->Timesheet->save($this->request->data)) {
+				$this->Session->setFlash('The timesheet has been saved','success');
+				$this->redirect('/');
+			} else {
+				$this->Session->setFlash('The timesheet could not be saved. Please, try again.','error');
+			}
+		} else {
+			$options = array(
+				'conditions' => array('Timesheet.' . $this->Timesheet->primaryKey => $id),
+				'contain' => array(
+					'Record' => array(
+						'Communication'
+					),
+					'CasaCase' => array(
+						'Child' =>  array(
+							'order' => array('Child.dob')
+						)
+					)
+				)
+			);
+			$this->request->data = $this->Timesheet->find('first', $options);
+		}
+		$communications = $this->Timesheet->Record->Communication->find('list');
+		$this->set(compact('communications'));
+	}
+	
+	public function admin_edit($id = null) {
+		if (!$this->Timesheet->exists($id)) {
+			throw new NotFoundException(__('Invalid timesheet'));
+		}
+		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Timesheet->save($this->request->data)) {
 				$this->Session->setFlash('The timesheet has been saved','success');
 				$this->redirect('/');

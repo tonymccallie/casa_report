@@ -1,7 +1,7 @@
 <?php
 App::uses('AppModel', 'Model');
 class User extends AppModel {
-	var $order = array('email');
+	var $order = array('first_name'=>'asc','last_name'=>'asc');
 	
 	var $virtualFields = array(
 		'name' => 'CONCAT(first_name, " ", last_name)'
