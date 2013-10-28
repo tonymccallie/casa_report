@@ -86,7 +86,12 @@ class UsersController extends AppController {
 				$this->Session->setFlash('There was an error changing the password.', 'error');
 			}
 		} else {
-			$this->request->data = $this->User->findById(Authsome::get('id'));
+			$this->request->data = $this->User->find('first',array(
+				'conditions' => array(
+					'User.id' => Authsome::get('id')
+				),
+				'contain' => array()
+			));
 			$this->request->data['User']['passwd'] = '';
 		}
 	}
@@ -209,6 +214,10 @@ class UsersController extends AppController {
 			throw new NotFoundException(__('Invalid user'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
+			if($this->request->data['User']['passwd'] == '') {
+				unset($this->request->data['User']['passwd']);
+				unset($this->request->data['User']['passwd_verify']);
+			}
 			if ($this->User->save($this->request->data)) {
 				$this->Session->setFlash('The user has been saved','success');
 				$this->redirect(array('action' => 'index'));

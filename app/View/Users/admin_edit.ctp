@@ -68,7 +68,7 @@
 		<div class="row-fluid">
 			<div class="span12">
 				<?php
-					echo $this->Form->submit('Add User',array('class'=>'btn pull-right btn-primary'));
+					echo $this->Form->submit('Save User',array('class'=>'btn pull-right btn-primary'));
 				?>
 			</div>
 		</div>
