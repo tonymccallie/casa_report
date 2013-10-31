@@ -1,3 +1,15 @@
+<script type="text/javascript">
+/* <![CDATA[ */
+
+$(document).ready(function() {
+	$('#supervisor_id').change(function() {
+		var value = $(this).val();
+		window.location = '<?php echo Common::currentUrl() ?>admin/timesheets/index/supervisor:'+value;
+	});
+});
+
+/* ]]> */
+</script>
 <div class="admin_header">
 	<h3>
 		<i class="icon-edit"></i> Timesheets
@@ -7,6 +19,14 @@
 	</h3>
 </div>
 <div class="">
+	<div class="row-fluid">
+		<div class="span4 offset8">
+			<?php
+				$value = !empty($this->request->params['named']['supervisor'])?$this->request->params['named']['supervisor']:'';
+				echo $this->Form->input('supervisor_id',array('value'=>$value,'options'=>$supervisors,'empty'=>'Filter by Supervisor','class'=>'span12','label'=>false));
+			?>
+		</div>
+	</div>
 	<table class="table table-striped table-bordered">
 		<thead>
 			<tr>

@@ -1,16 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
 class TimesheetsController extends AppController {
-	public function admin_index() {
-		$this->paginate = array(
-			'contain' => array(
-				'CasaCase' => 'Volunteer'
-			)
-		);
-		$timesheets = $this->paginate();
-		$this->set(compact('timesheets'));
-	}
-	
 	public function add($id = null) {
 		if(empty($id)) {
 			$this->view = 'choose';
@@ -93,6 +83,41 @@ class TimesheetsController extends AppController {
 		}
 		$communications = $this->Timesheet->Record->Communication->find('list');
 		$this->set(compact('communications'));
+	}
+	
+	public function admin_index() {
+		$paginate = array(
+			'contain' => array(
+				'CasaCase' => 'Volunteer'
+			)
+		);
+		
+		if(!empty($this->request->params['named']['supervisor'])) {
+			$caselist = $this->Timesheet->CasaCase->find('all',array(
+				'conditions' => array(
+					'CasaCase.supervisor_id' => $this->request->params['named']['supervisor']
+				),
+				'contain' => array()
+			));
+			$caseids = Set::extract('/CasaCase/id',$caselist);
+			$paginate['conditions'] = array(
+				'Timesheet.case_id' => $caseids
+			);
+		}
+		
+		$this->paginate = $paginate;
+		
+		$supervisors = $this->Timesheet->CasaCase->Volunteer->Supervisor->find('list',array(
+			'conditions' => array(
+				'Supervisor.role_id' => 3
+			),
+			'order' => array(
+				'first_name' => 'asc', 'last_name' => 'asc'
+			)
+		));
+
+		$timesheets = $this->paginate();
+		$this->set(compact('timesheets','supervisors'));
 	}
 	
 	public function admin_edit($id = null) {
