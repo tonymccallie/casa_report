@@ -25,7 +25,7 @@
 			</div>
 			<div class="span6">
 				<?php echo $this->Form->input('case_hours.0.minutes',array('label'=>'&nbsp;','class'=>'span12','options'=>array(
-					'0' => '00',
+					'.0' => '00',
 					'.25' => '15',
 					'.5' => '30',
 					'.75' => '45'
@@ -40,7 +40,7 @@
 			</div>
 			<div class="span6">
 				<?php echo $this->Form->input('non_case_hours.0.minutes',array('label'=>'&nbsp;','class'=>'span12','options'=>array(
-					'0' => '00',
+					'.0' => '00',
 					'.25' => '15',
 					'.5' => '30',
 					'.75' => '45'
