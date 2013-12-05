@@ -26,7 +26,7 @@
 		<?php foreach($cases as $case): ?>
 			<tr>
 				<td><?php echo $this->Html->link($case['CasaCase']['name'],array('action'=>'edit',$case['CasaCase']['id'])) ?></td>
-				<td><?php echo $volunteers[$case['CasaCase']['user_id']] ?></td>
+				<td><?php echo !empty($case['CasaCase']['user_id'])?$volunteers[$case['CasaCase']['user_id']]:'<i>Unassigned</i>' ?></td>
 				<td><?php echo $supervisors[$case['CasaCase']['supervisor_id']] ?></td>
 			</tr>
 		<?php endforeach ?>
