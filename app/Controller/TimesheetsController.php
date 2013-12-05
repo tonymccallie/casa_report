@@ -87,10 +87,20 @@ class TimesheetsController extends AppController {
 	
 	public function admin_index() {
 		$paginate = array(
+			'conditions' => array(
+				'Timesheet.archived' => 0
+			),
 			'contain' => array(
 				'CasaCase' => 'Volunteer'
 			)
 		);
+		
+		if(!empty($this->request->data['Timesheet']['supervisor_id'])) {
+			$this->request->params['named']['supervisor'] = $this->request->data['Timesheet']['supervisor_id'];
+		}
+		
+		$caseids = array();
+		$searchCases = false;
 		
 		if(!empty($this->request->params['named']['supervisor'])) {
 			$caselist = $this->Timesheet->CasaCase->find('all',array(
@@ -99,12 +109,33 @@ class TimesheetsController extends AppController {
 				),
 				'contain' => array()
 			));
+			$searchCases = true;
 			$caseids = Set::extract('/CasaCase/id',$caselist);
-			$paginate['conditions'] = array(
-				'Timesheet.case_id' => $caseids
-			);
 		}
 		
+		if(!empty($this->request->data['Timesheet']['name'])) {
+			$caselist = $this->Timesheet->CasaCase->find('all',array(
+				'conditions' => array(
+					'CasaCase.name LIKE' => '%'.$this->request->data['Timesheet']['name'].'%'
+				),
+				'contain' => array()
+			));
+			$searchCases = true;
+			$tmpcaseids = Set::extract('/CasaCase/id',$caselist);
+			$caseids = am($tmpcaseids,$caseids);
+		}
+		if($searchCases) {
+			$paginate['conditions']['Timesheet.case_id'] = $caseids;
+		}
+		
+		if(!empty($this->request->data['Timesheet']['archived'])) {
+			$paginate['conditions']['Timesheet.archived'] = $this->request->data['Timesheet']['archived'];
+		}
+		
+		if(!empty($this->request->data['Timesheet']['name'])) {
+			//$paginate['conditions']['Timesheet.name LIKE'] = '%'.$this->request->data['Timesheet']['name'].'%';
+		}
+		//debug($paginate);
 		$this->paginate = $paginate;
 		
 		$supervisors = $this->Timesheet->CasaCase->Volunteer->Supervisor->find('list',array(
@@ -124,10 +155,11 @@ class TimesheetsController extends AppController {
 		if (!$this->Timesheet->exists($id)) {
 			throw new NotFoundException(__('Invalid timesheet'));
 		}
+		$this->request->data['Timesheet']['date']['day'] = '01';
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Timesheet->save($this->request->data)) {
 				$this->Session->setFlash('The timesheet has been saved','success');
-				$this->redirect('/');
+				$this->redirect(array('action'=>'index'));
 			} else {
 				$this->Session->setFlash('The timesheet could not be saved. Please, try again.','error');
 			}
@@ -149,6 +181,19 @@ class TimesheetsController extends AppController {
 		}
 		$communications = $this->Timesheet->Record->Communication->find('list');
 		$this->set(compact('communications'));
+	}
+	
+	public function admin_delete($id = null) {
+		$this->Timesheet->id = $id;
+		if (!$this->Timesheet->exists()) {
+			throw new NotFoundException(__('Invalid timesheet'));
+		}
+		if ($this->Timesheet->delete()) {
+			$this->Session->setFlash('Timesheet deleted','success');
+			$this->redirect(array('action' => 'index'));
+		}
+		$this->Session->setFlash('Timesheet was not deleted','error');
+		$this->redirect(array('action' => 'index'));
 	}
 }
 ?>

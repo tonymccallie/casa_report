@@ -69,6 +69,7 @@
 								<li><?php echo $this->Html->link('Volunteers/Supervisors','/admin/users') ?></li>
 								<li><?php echo $this->Html->link('Cases','/admin/casa_cases') ?></li>
 								<li><?php echo $this->Html->link('Timesheets','/admin/timesheets') ?></li>
+								<li><?php echo $this->Html->link('Reports','/admin/reports') ?></li>
 								<li><?php echo $this->Html->link('Communications','/admin/communications') ?></li>
 							</ul>
 						</li>

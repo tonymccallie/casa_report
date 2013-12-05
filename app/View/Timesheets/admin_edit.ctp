@@ -1,12 +1,19 @@
-<div class="admin_header">
-	<h3>
-		<i class="icon-edit"></i> Admin View: Edit Timesheet
-	</h3>
+<div class="admin_header row-fluid">
+	<div class="span12">
+		<h3>
+			<i class="icon-edit"></i> Admin View: Edit Timesheet
+			<div class="button-group pull-right">
+				<?php echo $this->Html->link('<i class="icon-trash"></i> Delete',array('action'=>'delete',$this->data['Timesheet']['id']),array('escape'=>false,'class'=>'btn'),'Are you sure you want to delete this timesheet?') ?>
+			</div>
+		</h3>
+	</div>
 </div>
 <?php echo $this->Form->create('Timesheet') ?>
 <?php echo $this->Form->input('id',array()); ?>
 <div class="row-fluid">
 	<div class="span6">
+		<h4>Archive?</h4>
+		<?php echo $this->Form->input('archived',array('label'=>'Archive this timesheet?','type'=>'checkbox')); ?>
 		<h4>Case Info</h4>
 		<div class="row-fluid">
 			<div class="span2">

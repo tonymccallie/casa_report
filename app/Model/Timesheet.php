@@ -5,7 +5,7 @@ class Timesheet extends AppModel {
 		'CasaCase' => array(
 			'className' => 'CasaCase',
 			'foreignKey' => 'case_id'
-		),'User'
+		),'User','Report'
 	);	
 	
 	public $hasMany = array(

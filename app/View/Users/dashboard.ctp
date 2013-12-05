@@ -10,6 +10,7 @@
 					echo $this->Html->link('Volunteers/Supervisors','/admin/users',array('class'=>'btn'));
 					echo $this->Html->link('Cases','/admin/casa_cases',array('class'=>'btn'));
 					echo $this->Html->link('Timesheets','/admin/timesheets',array('class'=>'btn'));
+					echo $this->Html->link('Reports','/admin/reports',array('class'=>'btn'));
 					echo $this->Html->link('Communications','/admin/communications',array('class'=>'btn'));
 				?>
 			</div>

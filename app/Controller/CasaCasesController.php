@@ -88,5 +88,18 @@ class CasaCasesController extends AppController {
 		));
 		$this->set(compact('supervisors','volunteers'));
 	}
+	
+	public function admin_delete($id = null) {
+		$this->CasaCase->id = $id;
+		if (!$this->CasaCase->exists()) {
+			throw new NotFoundException(__('Invalid case'));
+		}
+		if ($this->CasaCase->delete()) {
+			$this->Session->setFlash('Cage deleted','success');
+			$this->redirect(array('action' => 'index'));
+		}
+		$this->Session->setFlash('Case was not deleted','error');
+		$this->redirect(array('action' => 'index'));
+	}
 }
 ?>

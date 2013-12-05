@@ -1,4 +1,7 @@
 <div class="admin_header">
+	<div class="button-group pull-right">
+		<?php echo $this->Html->link('<i class="icon-trash"></i> Delete',array('action'=>'delete',$this->data['CasaCase']['id']),array('escape'=>false,'class'=>'btn'),'Are you sure you want to delete this case?') ?>
+	</div>
 	<h3>
 		<i class="icon-edit"></i> Edit Case
 	</h3>
@@ -21,23 +24,6 @@
 				<?php echo $this->Form->input('pmc',array()); ?>
 			</div>
 		</div>
-		<?php
-			echo $this->Form->input('phone1',array('class'=>'span12'));
-			echo $this->Form->input('phone2',array('class'=>'span12'));
-			echo $this->Form->input('address',array('class'=>'span12'));
-			echo $this->Form->input('city',array('class'=>'span12'));
-		?>
-		<div class="row-fluid">
-			<div class="span6">
-				<?php echo $this->Form->input('state',array('class'=>'span12','options'=>Common::states())); ?>
-			</div>
-			<div class="span6">
-				<?php echo $this->Form->input('zip',array('class'=>'span12')); ?>
-			</div>
-		</div>
-		<?php
-			echo $this->Form->input('county',array('class'=>'span12'));
-		?>
 	</div>
 	<div class="span6">
 		<h4>Children</h4>
