@@ -5,6 +5,9 @@ class CasaCasesController extends AppController {
 		$paginate = array(
 			'contain' => array(
 
+			),
+			'order' => array(
+				'CasaCase.name' => 'asc'
 			)
 		);
 		

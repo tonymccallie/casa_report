@@ -25,9 +25,9 @@
 		<tbody>
 		<?php foreach($cases as $case): ?>
 			<tr>
-				<td><?php echo $this->Html->link($case['CasaCase']['name'],array('action'=>'edit',$case['CasaCase']['id'])) ?></td>
+				<td><?php echo $this->Html->link('<i class="icon-edit"></i> '.$case['CasaCase']['name'],array('action'=>'edit',$case['CasaCase']['id']),array('escape'=>false)) ?></td>
 				<td><?php echo !empty($case['CasaCase']['user_id'])?$volunteers[$case['CasaCase']['user_id']]:'<i>Unassigned</i>' ?></td>
-				<td><?php echo $supervisors[$case['CasaCase']['supervisor_id']] ?></td>
+				<td><?php echo !empty($case['CasaCase']['supervisor_id'])?$supervisors[$case['CasaCase']['supervisor_id']]:'<i>Unassigned</i>' ?></td>
 			</tr>
 		<?php endforeach ?>
 		</tbody>
