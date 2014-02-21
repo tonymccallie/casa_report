@@ -65,12 +65,12 @@ $(document).ready(function() {
 			<tr>
 				<td>
 					<?php
-						$name = !empty($timesheet['CasaCase']['name'])?$timesheet['CasaCase']['name']:'Untitled';
-						echo $this->Html->link($name,array('action'=>'edit',$timesheet['Timesheet']['id']));
+						$name = !empty($timesheet['CasaCase']['name'])?$timesheet['CasaCase']['name']:'<i>Untitled</i>';
+						echo $this->Html->link($name,array('action'=>'edit',$timesheet['Timesheet']['id']),array('escape'=>false));
 					?>
 				</td>
-				<td><?php echo date('M Y',strtotime($timesheet['Timesheet']['date'])) ?></td>
-				<td><?php echo $timesheet['CasaCase']['Volunteer']['first_name'].' '.$timesheet['CasaCase']['Volunteer']['last_name'] ?></td>
+				<td><?php echo !empty($timesheet['Timesheet']['date'])?date('M Y',strtotime($timesheet['Timesheet']['date'])):'<i>Not Set</i>' ?></td>
+				<td><?php echo !empty($timesheet['CasaCase']['Volunteer']['first_name'])?$timesheet['CasaCase']['Volunteer']['first_name'].' '.$timesheet['CasaCase']['Volunteer']['last_name']:'<i>Unassigned</i>' ?></td>
 				<td><?php echo !empty($timesheet['Timesheet']['submitted'])?date('M d, Y',strtotime($timesheet['Timesheet']['submitted'])):'' ?></td>
 			</tr>
 		<?php endforeach ?>

@@ -75,10 +75,22 @@ class CasaCasesController extends AppController {
 				'contain'=>array(
 					'Child' => array(
 						'order' => array('Child.dob')
-					)
+					),
 				));
 			$this->request->data = $this->CasaCase->find('first', $options);
 		}
+		$timesheets = $this->CasaCase->Timesheet->find('all',array(
+			'conditions' => array(
+				'Timesheet.case_id' => $id
+			),
+			'contain' => array(
+				'User'
+			),
+			'limit' => 5,
+			'order' => array(
+				'Timesheet.date' => 'desc'
+			)
+		));
 		$supervisors = $this->CasaCase->Supervisor->find('list',array(
 			'conditions' => array(
 				'Supervisor.role_id' => 3
@@ -89,7 +101,7 @@ class CasaCasesController extends AppController {
 				'Volunteer.role_id' => 2
 			)
 		));
-		$this->set(compact('supervisors','volunteers'));
+		$this->set(compact('supervisors','volunteers','timesheets'));
 	}
 	
 	public function admin_delete($id = null) {
@@ -98,7 +110,7 @@ class CasaCasesController extends AppController {
 			throw new NotFoundException(__('Invalid case'));
 		}
 		if ($this->CasaCase->delete()) {
-			$this->Session->setFlash('Cage deleted','success');
+			$this->Session->setFlash('Case deleted','success');
 			$this->redirect(array('action' => 'index'));
 		}
 		$this->Session->setFlash('Case was not deleted','error');

@@ -4,35 +4,42 @@
 		<i class="icon-edit"></i> Edit Child
 	</h3>
 </div>
-<?php echo $this->Form->create('Child') ?>
+<?php
+	echo $this->Form->create('Child');
+		echo $this->Form->input('case_id',array('type'=>'hidden'));
+		echo $this->Form->input('id',array('type'=>'hidden'));
+?>
 <div class="row-fluid">
-	<div class="span6">
-		<?php
-			echo $this->Form->input('case_id',array('type'=>'hidden'));
-			echo $this->Form->input('id',array('type'=>'hidden'));
-		?>
-		<div class="row-fluid">
-			<div class="span6">
-				<?php echo $this->Form->input('first_name',array('class'=>'span12')); ?>
-			</div>
-			<div class="span6">
-				<?php echo $this->Form->input('last_name',array('class'=>'span12')); ?>
-			</div>
-		</div>
+	<div class="span3">
+		<?php echo $this->Form->input('first_name',array('class'=>'span12')); ?>
+	</div>
+	<div class="span3">
+		<?php echo $this->Form->input('last_name',array('class'=>'span12')); ?>
 	</div>
 	<div class="span6">
 		<?php echo $this->Form->input('dob',array('empty'=>true,'label'=>'Date of Birth','placeholder'=>'Date of Birth','class'=>'span4','maxYear'=>date('Y'),'minYear'=>date('Y')-80)); ?>
 	</div>
 </div>
 <div class="row-fluid">
+	<div class="span3">
+		<?php echo $this->Form->input('tmc',array()); ?>
+	</div>
+	<div class="span3">
+		<?php echo $this->Form->input('pmc',array()); ?>
+	</div>
 	<div class="span6">
+		<?php echo $this->Form->input('placement_date',array('class'=>'span4','empty'=>true)); ?>
+	</div>
+</div>
+<div class="row-fluid">
+	<div class="span4">
 		<?php
 			echo $this->Form->input('gender',array('options'=>array(
 				'F' => 'Female','M' => 'Male'
 			),'empty'=>'Please Choose','class'=>'span12')); 
 		?>
 	</div>
-	<div class="span6">
+	<div class="span4">
 		<?php
 			echo $this->Form->input('race',array('options'=>array(
 				'African-American' => 'African-American',
@@ -43,6 +50,16 @@
 				'Other' => 'Other'
 			),'empty'=>'Please Choose','class'=>'span12')); 
 		?>
+	</div>
+	<div class="span4">
+		<?php echo $this->Form->input('abuse',array('class'=>'span12','empty'=>true,'options'=>array(
+			'Sexual Assault/Abuse' => 'Sexual Assault/Abuse',
+			'Family Violence' => 'Family Violence',
+			'Physical Abuse/Neglect' => 'Physical Abuse/Neglect',
+			'Drugs' => 'Drugs',
+			'Risk' => 'Risk',
+			'Survivors of Homicide Victims' => 'Survivors of Homicide Victims'
+		))); ?>
 	</div>
 </div>
 <div class="row-fluid">
@@ -88,6 +105,14 @@
 				<?php echo $this->Form->input('bio_father_last',array('class'=>'span12','label'=>false)); ?>
 			</div>
 		</div>
+	</div>
+</div>
+<div class="row-fluid">
+	<div class="span6">
+		<?php echo $this->Form->input('closed',array('class'=>'span4','empty'=>true)); ?>
+	</div>
+	<div class="span6">
+		<?php echo $this->Form->input('closed_descr',array('class'=>'span12')); ?>
 	</div>
 </div>
 <div class="row-fluid">

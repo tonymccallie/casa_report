@@ -92,6 +92,9 @@ class TimesheetsController extends AppController {
 			),
 			'contain' => array(
 				'CasaCase' => 'Volunteer'
+			),
+			'order' => array(
+				'Timesheet.date' => 'desc'
 			)
 		);
 		

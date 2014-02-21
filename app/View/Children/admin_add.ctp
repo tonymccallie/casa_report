@@ -31,7 +31,7 @@
 </div>
 <div class="row-fluid">
 	<div class="span12">
-		<?php echo $this->Form->submit('Save Child',array('class'=>'btn btn-primary pull-right')); ?>
+		<?php echo $this->Form->submit('Next',array('class'=>'btn btn-primary pull-right')); ?>
 	</div>
 </div>
 <?php echo $this->Form->end() ?>

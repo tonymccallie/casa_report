@@ -13,9 +13,15 @@
 		<?php
 			echo $this->Form->input('id',array());
 			echo $this->Form->input('name',array('class'=>'span12'));
-			echo $this->Form->input('user_id',array('label'=>'Volunteer','options'=>$volunteers,'empty'=>'Please Choose','class'=>'span12'));
-			echo $this->Form->input('supervisor_id',array('label'=>'Supervisor','options'=>$supervisors,'empty'=>'Please Choose','class'=>'span12'));
 		?>
+		<div class="row-fluid">
+			<div class="span6">
+				<?php echo $this->Form->input('user_id',array('label'=>'Volunteer','options'=>$volunteers,'empty'=>'Please Choose','class'=>'span12')); ?>
+			</div>
+			<div class="span6">
+				<?php echo $this->Form->input('supervisor_id',array('label'=>'Supervisor','options'=>$supervisors,'empty'=>'Please Choose','class'=>'span12')); ?>
+			</div>
+		</div>
 		<div class="row-fluid">
 			<div class="span6">
 				<?php echo $this->Form->input('tmc',array()); ?>
@@ -39,8 +45,11 @@
 				<div class="span2">
 					<?php echo $child['gender'] ?>
 				</div>
-				<div class="span4">
+				<div class="span2">
 					<?php echo $age ?> y/o
+				</div>
+				<div class="span2">
+					<?php echo !empty($child['closed'])?'<i>(closed)</i>':'' ?>
 				</div>
 				<div class="span2">
 					<?php echo $this->Html->link('Edit','/admin/children/edit/'.$child['id'],array('class'=>'btn')) ?>
@@ -48,6 +57,32 @@
 			</div>
 		<?php endforeach ?>
 		<?php echo $this->Html->link('<i class="icon-plus"></i> Add Child','/admin/children/add/'.$this->data['CasaCase']['id'],array('class'=>'btn','escape'=>false)) ?>
+	</div>
+</div>
+<div class="row-fluid">
+	<div class="span12">
+		<h4>Latest Timesheets</h4>
+		<table class="table table-striped table-bordered">
+		<?php foreach($timesheets as $timesheet): ?>
+			<tr>
+				<td>
+					<?php echo $this->Html->link(date('M Y',strtotime($timesheet['Timesheet']['date'])),'/admin/timesheets/edit/'.$timesheet['Timesheet']['id']) ?>
+					<?php echo !empty($timesheet['Timesheet']['archived'])?' <i>archived</i>':'' ?>
+				</td>
+				<td>
+					<?php echo $timesheet['User']['first_name'].' '.$timesheet['User']['last_name'] ?>
+				</td>
+			</tr>
+		<?php endforeach ?>
+		</table>
+	</div>
+</div>
+<div class="row-fluid">
+	<div class="span6">
+		<?php echo $this->Form->input('closed',array('class'=>'span4','empty'=>true)); ?>
+	</div>
+	<div class="span6">
+		<?php echo $this->Form->input('closed_descr',array('class'=>'span12')); ?>
 	</div>
 </div>
 <div class="row-fluid">
