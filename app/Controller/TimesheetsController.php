@@ -98,17 +98,61 @@ class TimesheetsController extends AppController {
 			)
 		);
 		
-		if(!empty($this->request->data['Timesheet']['supervisor_id'])) {
-			$this->request->params['named']['supervisor'] = $this->request->data['Timesheet']['supervisor_id'];
+		if(!empty($this->request->data)) {
+			$url = '';
+			foreach($this->request->data['Timesheet'] as $field => $option) {
+				if((!empty($option))&&(!is_array($option))) {
+					$url.='/'.$field.':'.$option;
+				}
+				if(is_array($option)) {
+					if(!empty($option['month'])) {
+						$url.='/month:'.$option['month'];	
+					}
+					if(!empty($option['year'])) {
+						$url.='/year:'.$option['year'];	
+					}
+				}
+			}
+			if(!empty($url)) {
+				$this->redirect('/admin/timesheets/index'.$url);
+			}
 		}
-		
+
 		$caseids = array();
 		$searchCases = false;
+		$data = array('Timesheet');
 		
-		if(!empty($this->request->params['named']['supervisor'])) {
+		if(!empty($this->request->named)) {
+			$data['Timesheet'] = $this->request->named;
+			$data['Timesheet']['date'] = array();
+		}
+		
+		if((!empty($this->request->params['named']['month']))||(!empty($this->request->params['named']['year']))) {
+			$year = date('Y');
+			$month = date('m');
+			if(!empty($this->request->params['named']['month'])) {
+				$month = $this->request->params['named']['month'];
+				$data['Timesheet']['date']['month'] = $this->request->params['named']['month'];
+			}
+			
+			if(!empty($this->request->params['named']['year'])) {
+				$year = $this->request->params['named']['year'];
+				$data['Timesheet']['date']['year'] = $this->request->params['named']['year'];
+			}
+			
+			$paginate['conditions']['AND'] = array(
+				'Timesheet.date' =>  $year.'-'.$month.'-01'
+			);
+		}
+		
+		
+		
+		$this->data = $data;
+		
+		if(!empty($this->request->params['named']['supervisor_id'])) {
 			$caselist = $this->Timesheet->CasaCase->find('all',array(
 				'conditions' => array(
-					'CasaCase.supervisor_id' => $this->request->params['named']['supervisor']
+					'CasaCase.supervisor_id' => $this->request->params['named']['supervisor_id']
 				),
 				'contain' => array()
 			));
@@ -116,10 +160,10 @@ class TimesheetsController extends AppController {
 			$caseids = Set::extract('/CasaCase/id',$caselist);
 		}
 		
-		if(!empty($this->request->data['Timesheet']['name'])) {
+		if(!empty($this->request->params['named']['name'])) {
 			$caselist = $this->Timesheet->CasaCase->find('all',array(
 				'conditions' => array(
-					'CasaCase.name LIKE' => '%'.$this->request->data['Timesheet']['name'].'%'
+					'CasaCase.name LIKE' => '%'.$this->request->params['named']['name'].'%'
 				),
 				'contain' => array()
 			));
@@ -131,8 +175,8 @@ class TimesheetsController extends AppController {
 			$paginate['conditions']['Timesheet.case_id'] = $caseids;
 		}
 		
-		if(!empty($this->request->data['Timesheet']['archived'])) {
-			$paginate['conditions']['Timesheet.archived'] = $this->request->data['Timesheet']['archived'];
+		if(!empty($this->request->params['named']['archived'])) {
+			$paginate['conditions']['Timesheet.archived'] = $this->request->params['named']['archived'];
 		}
 		
 		if(!empty($this->request->data['Timesheet']['name'])) {
