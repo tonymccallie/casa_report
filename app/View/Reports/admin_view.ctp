@@ -41,23 +41,23 @@
 	switch($report['Report']['quarter']) {
 		case 1:
 			$quarter = 'First';
-			$start_date = strtotime($report['Report']['year'].'-01-01');
-			$stop_date = strtotime($report['Report']['year'].'-03-31');
+			$start_date = strtotime($report['Report']['year'].'-09-01');
+			$stop_date = strtotime($report['Report']['year'].'-11-30');
 			break;
 		case 2:
 			$quarter = 'Second';
-			$start_date = strtotime($report['Report']['year'].'-04-01');
-			$stop_date = strtotime($report['Report']['year'].'-06-30');
+			$start_date = strtotime(($report['Report']['year']-1).'-12-01');
+			$stop_date = strtotime($report['Report']['year'].'-02-28');
 			break;
 		case 3:
 			$quarter = 'Third';
-			$start_date = strtotime($report['Report']['year'].'-07-01');
-			$stop_date = strtotime($report['Report']['year'].'-09-30');
+			$start_date = strtotime($report['Report']['year'].'-03-01');
+			$stop_date = strtotime($report['Report']['year'].'-05-31');
 			break;
 		case 4:
 			$quarter = 'Fourth';
-			$start_date = strtotime($report['Report']['year'].'-10-01');
-			$stop_date = strtotime($report['Report']['year'].'-12-31');
+			$start_date = strtotime($report['Report']['year'].'-06-01');
+			$stop_date = strtotime($report['Report']['year'].'-08-31');
 			break;	
 	}
 	

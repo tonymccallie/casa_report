@@ -76,26 +76,26 @@ class ReportsController extends AppController {
 		switch($this->request->data['Report']['quarter']) {
 			case 1:
 				$range = array(
-					"Timesheet.date >= '".$this->request->data['Report']['year']."-01-01'",
-					"Timesheet.date <= '".$this->request->data['Report']['year']."-03-31'",
+					"Timesheet.date >= '".$this->request->data['Report']['year']."-09-01'",
+					"Timesheet.date <= '".$this->request->data['Report']['year']."-11-30'",
 				);
 				break;
 			case 2:
 				$range = array(
-					"Timesheet.date >= '".$this->request->data['Report']['year']."-04-01'",
-					"Timesheet.date <= '".$this->request->data['Report']['year']."-06-30'",
+					"Timesheet.date >= '".($this->request->data['Report']['year']-1)."-12-01'",
+					"Timesheet.date <= '".$this->request->data['Report']['year']."-02-28'",
 				);
 				break;
 			case 3:
 				$range = array(
-					"Timesheet.date >= '".$this->request->data['Report']['year']."-07-01'",
-					"Timesheet.date <= '".$this->request->data['Report']['year']."-09-30'",
+					"Timesheet.date >= '".$this->request->data['Report']['year']."-03-01'",
+					"Timesheet.date <= '".$this->request->data['Report']['year']."-05-31'",
 				);
 				break;
 			case 4:
 				$range = array(
-					"Timesheet.date >= '".$this->request->data['Report']['year']."-10-01'",
-					"Timesheet.date <= '".$this->request->data['Report']['year']."-12-31'",
+					"Timesheet.date >= '".$this->request->data['Report']['year']."-06-01'",
+					"Timesheet.date <= '".$this->request->data['Report']['year']."-08-31'",
 				);
 				break;
 			

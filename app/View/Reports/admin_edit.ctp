@@ -26,10 +26,10 @@ $(document).ready(function() {
 	<div class="row-fluid">
 		<div class="span2">
 			<?php echo $this->Form->input('quarter',array('class'=>'span12','options'=>array(
-				1 => 'First (Jan-Mar)',
-				2 => 'Second (Apr-Jun)',
-				3 => 'Third (Jul-Sep)',
-				4 => 'Fourth (Oct-Dec)'
+				1 => 'First (Sep-Nov)',
+				2 => 'Second (Dec-Feb)',
+				3 => 'Third (Mar-May)',
+				4 => 'Fourth (Jun-Aug)'
 			))); ?>
 		</div>
 		<div class="span2">
