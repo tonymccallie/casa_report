@@ -91,11 +91,35 @@
 					Type:
 				</th>
 				<th class="hidden-phone">
-					Case Hours
-				</div>
-				<th class="hidden-phone">
-					Non-Case Hours
+					A1
 				</th>
+				<th class="hidden-phone">
+					A2
+				</th>
+				<th class="hidden-phone">
+					A3
+				</th>
+				<th class="hidden-phone">
+					A4
+				</th>
+				<th class="hidden-phone">
+					A5
+				</th>
+				<th class="hidden-phone">
+					A6
+				</th>
+				<th class="hidden-phone">
+					B
+				</th>
+				<th class="hidden-phone">
+					C
+				</th>
+				<th class="hidden-phone">
+					D / Non-Case Hours
+				</th>
+				<th class="hidden-phone">
+					Total VOCA
+				</div>
 				<th class="hidden-phone">
 					Mileage
 				</th>
@@ -122,10 +146,34 @@
 					<?php echo $record['Communication']['title'] ?>
 				</td>
 				<td class="hidden-phone">
-					<?php echo $record['case_hours'] ?>
+					<?php echo $record['a1_hours'] ?>
+				</td>
+				<td class="hidden-phone">
+					<?php echo $record['a2_hours'] ?>
+				</td>
+				<td class="hidden-phone">
+					<?php echo $record['a3_hours'] ?>
+				</td>
+				<td class="hidden-phone">
+					<?php echo $record['a4_hours'] ?>
+				</td>
+				<td class="hidden-phone">
+					<?php echo $record['a5_hours'] ?>
+				</td>
+				<td class="hidden-phone">
+					<?php echo $record['a6_hours'] ?>
+				</td>
+				<td class="hidden-phone">
+					<?php echo $record['b_hours'] ?>
+				</td>
+				<td class="hidden-phone">
+					<?php echo $record['c_hours'] ?>
 				</td>
 				<td class="hidden-phone">
 					<?php echo $record['non_case_hours'] ?>
+				</td>
+				<td class="hidden-phone">
+					<?php echo $record['case_hours'] ?>
 				</td>
 				<td class="hidden-phone">
 					<?php echo $record['mileage'] ?>
@@ -133,16 +181,16 @@
 			</tr>
 			<?php if(!empty($record['notes'])): ?>
 			<tr>
-				<td colspan="5">
+				<td colspan="13">
 					<i>Notes: <?php echo $record['notes'] ?></i>
 				</td>
 			</tr>
 			<?php endif ?>
 		<?php endforeach ?>
 			<tr>
-				<td colspan="3" align="right">Totals:</td>
-				<td><?php echo $case_hours ?></td>
+				<td colspan="11" align="right">Totals:</td>
 				<td><?php echo $non_case_hours ?></td>
+				<td><?php echo $case_hours ?></td>
 				<td><?php echo $mileage ?></td>
 			</tr>
 		</table>

@@ -76,7 +76,7 @@
 				);
 			}
 			
-			if((!empty($timesheet['CasaCase']['closed'])) && (strtotime($timesheet['CasaCase']['cloased']) <= $stop_date)) {
+			if((!empty($timesheet['CasaCase']['closed'])) && (strtotime($timesheet['CasaCase']['closed']) <= $stop_date)) {
 				$cases['counties'][$timesheet['CasaCase']['county']]['closed']++;
 				$cases['closed']++;
 			}
@@ -130,7 +130,7 @@
 					$children['ethnicity']['Ethnicity Unknown']++;
 				}
 				
-				if((!empty($child['closed'])) && (strtotime($child['cloased']) <= $stop_date)) {
+				if((!empty($child['closed'])) && (strtotime($child['closed']) <= $stop_date)) {
 					$children['counties'][$child['county']]['closed']++;
 					$children['closed']++;
 				}
