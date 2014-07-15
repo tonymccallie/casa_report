@@ -134,6 +134,11 @@
 	</div>
 </div>
 <div class="row-fluid">
+	<div class="span4 offset8">
+		<?php echo $this->Form->input('signature',array('class'=>'span12 pull-right')); ?>
+	</div>
+</div>
+<div class="row-fluid">
 	<div class="span12">
 		<div class="btn-group pull-right">
 			<?php

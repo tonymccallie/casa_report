@@ -33,54 +33,64 @@ class TimesheetsController extends AppController {
 		if (!$this->Timesheet->exists($id)) {
 			throw new NotFoundException(__('Invalid timesheet'));
 		}
+		$bolSubmit = true;
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if(!empty($this->request->data['Timesheet']['submit'])) {
-				$this->request->data['Timesheet']['submitted'] = date('Y-m-d H:i:s');
-				$info = $this->Timesheet->find('first', array(
-					'conditions' => array(
-						'Timesheet.id' => $this->request->data['Timesheet']['id']
-					),
-					'contain' => array(
-						'CasaCase' => array(
-							'Supervisor'
+				if(!empty($this->request->data['Timesheet']['signature'])) {
+					$this->request->data['Timesheet']['submitted'] = date('Y-m-d H:i:s');
+					$info = $this->Timesheet->find('first', array(
+						'conditions' => array(
+							'Timesheet.id' => $this->request->data['Timesheet']['id']
 						),
-						'User'
-					)
-				));
-				$supervisor = array($info['CasaCase']['Supervisor']['email'],'alex@amarillocasa.org');
-				//EMAIL ADMINS
-				Common::email(array(
-					'to' => $supervisor,
-					'subject' => 'Timesheet submitted',
-					'template' => 'submit',
-					'variables' => array(
-						'timesheet' => $info
-					)
-				),'');
+						'contain' => array(
+							'CasaCase' => array(
+								'Supervisor'
+							),
+							'User'
+						)
+					));
+					$supervisor = array($info['CasaCase']['Supervisor']['email'],'alex@amarillocasa.org');
+					//EMAIL ADMINS
+					Common::email(array(
+						'to' => $supervisor,
+						'subject' => 'Timesheet submitted',
+						'template' => 'submit',
+						'variables' => array(
+							'timesheet' => $info
+						)
+					),'');
+				} else {
+					$this->Session->setFlash('You must enter a digital signature to submit the Timesheet.','error');
+					$bolSubmit = false;
+				}
 			}
 			$this->request->data['Timesheet']['date']['day'] = '01';
-			if ($this->Timesheet->save($this->request->data)) {
-				$this->Session->setFlash('The timesheet has been saved','success');
-				$this->redirect('/');
-			} else {
-				$this->Session->setFlash('The timesheet could not be saved. Please, try again.','error');
+			if($bolSubmit) {
+				if ($this->Timesheet->save($this->request->data)) {
+					$this->Session->setFlash('The timesheet has been saved','success');
+					$this->redirect('/');
+				} else {
+					$this->Session->setFlash('The timesheet could not be saved. Please, try again.','error');
+				}
 			}
 		} else {
-			$options = array(
-				'conditions' => array('Timesheet.' . $this->Timesheet->primaryKey => $id),
-				'contain' => array(
-					'Record' => array(
-						'Communication'
-					),
-					'CasaCase' => array(
-						'Child' =>  array(
-							'order' => array('Child.dob')
-						)
+			$this->request->data = array();
+		}
+		$options = array(
+			'conditions' => array('Timesheet.' . $this->Timesheet->primaryKey => $id),
+			'contain' => array(
+				'Record' => array(
+					'Communication'
+				),
+				'CasaCase' => array(
+					'Child' =>  array(
+						'order' => array('Child.dob')
 					)
 				)
-			);
-			$this->request->data = $this->Timesheet->find('first', $options);
-		}
+			)
+		);
+		$timesheet = $this->Timesheet->find('first', $options);
+		$this->request->data = am($timesheet, $this->request->data);
 		$communications = $this->Timesheet->Record->Communication->find('list');
 		$this->set(compact('communications'));
 	}
