@@ -18,7 +18,7 @@ class RecordsController extends AppController {
 			$this->request->data['Record']['b_hours'] = $this->request->data['b_hours'][0]['hours'].$this->request->data['b_hours'][0]['minutes'];
 			$this->request->data['Record']['c_hours'] = $this->request->data['c_hours'][0]['hours'].$this->request->data['c_hours'][0]['minutes'];
 			$this->request->data['Record']['non_case_hours'] = $this->request->data['non_case_hours'][0]['hours'].$this->request->data['non_case_hours'][0]['minutes'];
-			$this->request->data['Record']['case_hours'] = $this->request->data['Record']['a1_hours']+$this->request->data['Record']['a2_hours']+$this->request->data['Record']['a3_hours']+$this->request->data['Record']['a4_hours']+$this->request->data['Record']['a5_hours']+$this->request->data['Record']['a6_hours'];
+			$this->request->data['Record']['case_hours'] = $this->request->data['Record']['a1_hours']+$this->request->data['Record']['a2_hours']+$this->request->data['Record']['a3_hours']+$this->request->data['Record']['a4_hours']+$this->request->data['Record']['a5_hours']+$this->request->data['Record']['a6_hours']+$this->request->data['Record']['b_hours']+$this->request->data['Record']['c_hours'];
 			
 			if($this->Record->save($this->request->data)) {
 				$this->Session->setFlash('Record added','success');
@@ -42,7 +42,7 @@ class RecordsController extends AppController {
 			$this->request->data['Record']['b_hours'] = $this->request->data['b_hours'][0]['hours'].$this->request->data['b_hours'][0]['minutes'];
 			$this->request->data['Record']['c_hours'] = $this->request->data['c_hours'][0]['hours'].$this->request->data['c_hours'][0]['minutes'];
 			$this->request->data['Record']['non_case_hours'] = $this->request->data['non_case_hours'][0]['hours'].$this->request->data['non_case_hours'][0]['minutes'];
-			$this->request->data['Record']['case_hours'] = $this->request->data['Record']['a1_hours']+$this->request->data['Record']['a2_hours']+$this->request->data['Record']['a3_hours']+$this->request->data['Record']['a4_hours']+$this->request->data['Record']['a5_hours']+$this->request->data['Record']['a6_hours'];
+			$this->request->data['Record']['case_hours'] = $this->request->data['Record']['a1_hours']+$this->request->data['Record']['a2_hours']+$this->request->data['Record']['a3_hours']+$this->request->data['Record']['a4_hours']+$this->request->data['Record']['a5_hours']+$this->request->data['Record']['a6_hours']+$this->request->data['Record']['b_hours']+$this->request->data['Record']['c_hours'];
 			if($this->Record->save($this->request->data)) {
 				$this->Session->setFlash('Record added','success');
 				$this->redirect('/admin/timesheets/edit/'.$this->request->data['Record']['timesheet_id']);
@@ -66,7 +66,7 @@ class RecordsController extends AppController {
 			$this->request->data['Record']['b_hours'] = $this->request->data['b_hours'][0]['hours'].$this->request->data['b_hours'][0]['minutes'];
 			$this->request->data['Record']['c_hours'] = $this->request->data['c_hours'][0]['hours'].$this->request->data['c_hours'][0]['minutes'];
 			$this->request->data['Record']['non_case_hours'] = $this->request->data['non_case_hours'][0]['hours'].$this->request->data['non_case_hours'][0]['minutes'];
-			$this->request->data['Record']['case_hours'] = $this->request->data['Record']['a1_hours']+$this->request->data['Record']['a2_hours']+$this->request->data['Record']['a3_hours']+$this->request->data['Record']['a4_hours']+$this->request->data['Record']['a5_hours']+$this->request->data['Record']['a6_hours'];
+			$this->request->data['Record']['case_hours'] = $this->request->data['Record']['a1_hours']+$this->request->data['Record']['a2_hours']+$this->request->data['Record']['a3_hours']+$this->request->data['Record']['a4_hours']+$this->request->data['Record']['a5_hours']+$this->request->data['Record']['a6_hours']+$this->request->data['Record']['b_hours']+$this->request->data['Record']['c_hours'];
 			if ($this->Record->save($this->request->data)) {
 				$this->Session->setFlash('The record has been saved','success');
 				$this->redirect('/timesheets/edit/'.$this->request->data['Record']['timesheet_id']);
@@ -114,7 +114,7 @@ class RecordsController extends AppController {
 			$this->request->data['Record']['b_hours'] = $this->request->data['b_hours'][0]['hours'].$this->request->data['b_hours'][0]['minutes'];
 			$this->request->data['Record']['c_hours'] = $this->request->data['c_hours'][0]['hours'].$this->request->data['c_hours'][0]['minutes'];
 			$this->request->data['Record']['non_case_hours'] = $this->request->data['non_case_hours'][0]['hours'].$this->request->data['non_case_hours'][0]['minutes'];
-			$this->request->data['Record']['case_hours'] = $this->request->data['Record']['a1_hours']+$this->request->data['Record']['a2_hours']+$this->request->data['Record']['a3_hours']+$this->request->data['Record']['a4_hours']+$this->request->data['Record']['a5_hours']+$this->request->data['Record']['a6_hours'];
+			$this->request->data['Record']['case_hours'] = $this->request->data['Record']['a1_hours']+$this->request->data['Record']['a2_hours']+$this->request->data['Record']['a3_hours']+$this->request->data['Record']['a4_hours']+$this->request->data['Record']['a5_hours']+$this->request->data['Record']['a6_hours']+$this->request->data['Record']['b_hours']+$this->request->data['Record']['c_hours'];
 			if ($this->Record->save($this->request->data)) {
 				$this->Session->setFlash('The record has been saved','success');
 				$this->redirect('/admin/timesheets/edit/'.$this->request->data['Record']['timesheet_id']);

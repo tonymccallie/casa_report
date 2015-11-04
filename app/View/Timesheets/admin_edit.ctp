@@ -210,9 +210,7 @@
 			?>
 		<?php endforeach ?>
 			<tr>
-				<td colspan="9" align="right">Totals:</td>
-				<td><?php echo $b_hours ?></td>
-				<td><?php echo $c_hours ?></td>
+				<td colspan="11" align="right">Totals:</td>
 				<td><?php echo $non_case_hours ?></td>
 				<td><?php echo $case_hours ?></td>
 				<td><?php echo $mileage ?></td>
