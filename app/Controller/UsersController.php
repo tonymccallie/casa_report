@@ -219,7 +219,9 @@ class UsersController extends AppController {
 				unset($this->request->data['User']['passwd_verify']);
 			}
 			
-			die(var_dump($this->request->data));
+			if((!empty($this->request->data['User']['verified']))&&($this->request->data['User']['passwd_verify'] == "1")) {
+				$this->request->data['User']['passwd_verify'] = date('Y-m-d H:i');
+			}
 			
 			if ($this->User->save($this->request->data)) {
 				$this->Session->setFlash('The user has been saved','success');
