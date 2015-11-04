@@ -53,6 +53,7 @@
 			</div>
 			<div class="span6">
 				<?php
+					echo $this->Form->input('verified',array('type'=>'checkbox'));
 					echo $this->Form->input('dob',array('empty'=>true,'label'=>'Date of Birth','placeholder'=>'Date of Birth','class'=>'span4','maxYear'=>date('Y'),'minYear'=>date('Y')-80));
 					echo $this->Form->input('gender',array('options'=>array(
 						'F' => 'Female','M' => 'Male'

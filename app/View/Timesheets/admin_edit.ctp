@@ -2,6 +2,8 @@
 	$case_hours = 0;
 	$non_case_hours = 0;
 	$mileage = 0;
+	$b_hours = 0;
+	$c_hours = 0;
 ?>
 <div class="admin_header row-fluid">
 	<div class="span12">
@@ -26,6 +28,22 @@
 			</div>
 			<div class="span10">
 				<?php echo $this->Html->link('<i class="icon-edit"></i> '.$this->data['CasaCase']['name'],'/admin/casa_cases/edit/'.$this->data['CasaCase']['id'],array('escape'=>false)) ?>
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span2">
+				Supervisor:
+			</div>
+			<div class="span10">
+				<?php echo $this->data['CasaCase']['Supervisor']['first_name'].' '.$this->data['CasaCase']['Supervisor']['last_name'] ?>
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span2">
+				Advocate:
+			</div>
+			<div class="span10">
+				<?php echo $this->data['CasaCase']['Volunteer']['first_name'].' '.$this->data['CasaCase']['Volunteer']['last_name'] ?>
 			</div>
 		</div>
 		<h4>Children</h4>
@@ -186,9 +204,15 @@
 				</td>
 			</tr>
 			<?php endif ?>
+			<?php
+				$b_hours+=$record['b_hours'];
+				$c_hours+=$record['c_hours'];
+			?>
 		<?php endforeach ?>
 			<tr>
-				<td colspan="11" align="right">Totals:</td>
+				<td colspan="9" align="right">Totals:</td>
+				<td><?php echo $b_hours ?></td>
+				<td><?php echo $c_hours ?></td>
 				<td><?php echo $non_case_hours ?></td>
 				<td><?php echo $case_hours ?></td>
 				<td><?php echo $mileage ?></td>

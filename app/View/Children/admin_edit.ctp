@@ -21,11 +21,14 @@
 	</div>
 </div>
 <div class="row-fluid">
-	<div class="span3">
+	<div class="span2">
 		<?php echo $this->Form->input('tmc',array()); ?>
 	</div>
-	<div class="span3">
+	<div class="span2">
 		<?php echo $this->Form->input('pmc',array()); ?>
+	</div>
+	<div class="span2">
+		<?php echo $this->Form->input('placements',array('class'=>'span12')); ?>
 	</div>
 	<div class="span6">
 		<?php echo $this->Form->input('placement_date',array('class'=>'span4','empty'=>true)); ?>
@@ -65,11 +68,13 @@
 <div class="row-fluid">
 	<div class="span6">
 		<?php
+			echo $this->Form->input('placement_name',array('class'=>'span12'));
 			echo $this->Form->input('phone1',array('class'=>'span12'));
 			echo $this->Form->input('phone2',array('class'=>'span12'));
 			echo $this->Form->input('county',array('class'=>'span12'));
 			echo $this->Form->input('address',array('class'=>'span12'));
 			echo $this->Form->input('city',array('class'=>'span12'));
+			echo $this->Form->input('parent_attorney_contact',array('class'=>'span12'));
 		?>
 		<div class="row-fluid">
 			<div class="span6">
@@ -82,6 +87,14 @@
 	</div>
 	<div class="span6">
 		<?php
+			echo $this->Form->input('removal_reason',array('label'=>'Reason for removal','class'=>'span12','options'=>array(
+				'' => 'Please Choose',
+				'Physical Abuse' => 'Physical Abuse',
+				'Sexual Abuse' => 'Sexual Abuse',
+				'Emotional Abuse' => 'Emotional Abuse',
+				'Physical Neglect' => 'Physical Neglect',
+				'RAPER' => 'RAPER',
+			)));
 			echo $this->Form->input('therapist',array('class'=>'span12'));
 			echo $this->Form->input('attorney',array('class'=>'span12'));
 			echo $this->Form->input('cps_worker',array('class'=>'span12'));
@@ -105,6 +118,11 @@
 				<?php echo $this->Form->input('bio_father_last',array('class'=>'span12','label'=>false)); ?>
 			</div>
 		</div>
+	</div>
+</div>
+<div class="row-fluid">
+	<div class="span12">
+		<?php echo $this->Form->input('notes',array('class'=>'span12')); ?>
 	</div>
 </div>
 <div class="row-fluid">

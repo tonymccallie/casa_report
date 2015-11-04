@@ -228,6 +228,7 @@ class TimesheetsController extends AppController {
 						'Communication'
 					),
 					'CasaCase' => array(
+						'Supervisor','Volunteer',
 						'Child' =>  array(
 							'order' => array('Child.dob')
 						)

@@ -20,7 +20,7 @@
 	</div>
 	<div class="span6">
 		<?php
-			echo $this->Form->input('user_id',array('label'=>'Volunteer','options'=>$volunteers,'empty'=>'Please Choose','class'=>'span12'));
+			echo $this->Form->input('user_id',array('label'=>'Volunteer','options'=>$volunteers,'empty'=>'Unassigned','class'=>'span12'));
 			echo $this->Form->input('supervisor_id',array('label'=>'Supervisor','options'=>$supervisors,'empty'=>'Please Choose','class'=>'span12'));
 		?>
 	</div>
