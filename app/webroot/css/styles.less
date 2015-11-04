@@ -34,3 +34,12 @@ body {
 @import "responsive_large.less";
 @import "responsive_tablet.less";
 @import "responsive_phone.less";
+
+@media print {
+	.hidden-phone {
+		display: table-cell !important;
+	}
+	a[href]:after {
+		content: none;
+	}
+}
